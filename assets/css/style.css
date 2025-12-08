@@ -477,6 +477,29 @@ h3 .my-profession
 
 /* About */
 
+
+/**/
+/* Default (light mode) */
+.website-link {
+    color: #007bff;   /* blue for light mode */
+    text-decoration: none;
+}
+
+.website-link:hover {
+    text-decoration: underline;
+}
+
+/* Dark mode */
+body.dark-mode .website-link {
+    color: #ffffff;   /* lighter blue for dark mode */
+}
+
+
+
+
+
+
+
 .about .about-content
 {
     flex: 0 0 100%;
@@ -510,6 +533,7 @@ h3 .my-profession
     max-width: 60%;
     margin-top: 40px;
  }
+
 
  .about .about-content .personal-info .info-item 
  {

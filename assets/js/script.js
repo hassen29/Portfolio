@@ -1,119 +1,84 @@
-//typing animation
-
-var typed = new Typed(".typing",{
-    strings: ["BI Developer",
-        "Data Analyst",
-        "Data Engineer",
-        "Business Analyst"],
-    typeSpeed:60,
-    BackSpeed:60,
-    loop:true
-})
-
-//Aside
-
 const nav = document.querySelector(".nav"),
-       navList = nav.querySelectorAll("li"),
-       totalNavList = navList.length,
-       allSection = document.querySelectorAll(".section"),
-       totalSection = allSection.length;
-       for(let i=0; i<totalNavList; i++)
-       {
-       
-        const a = navList[i].querySelector("a");
-        a.addEventListener("click",function()
-        {   
+      navList = nav.querySelectorAll("li"),
+      totalNavList = navList.length,
+      allSection = document.querySelectorAll(".section"),
+      totalSection = allSection.length;
 
-            removeBackSection();
-            for(let j=0; j<totalNavList; j++)
-            {
-                if(navList[j].querySelector("a").classList.contains("active"))
+// Function to show a section
+function showSection(element) {
+    const target = element.getAttribute("href").split("#")[1];
+    const targetElement = document.querySelector("#" + target);
 
-                {
-                     addBackSection(j);
-                   // allSection[j].classList.add("back-section");
-                }
-
-
-                navList[j].querySelector("a").classList.remove("active");
-
-            }
-            this.classList.add("active")
-            showSection(this);
-            if( window.innerWidth < 1200)
-            {
-              asideSectionTogglerBtn();
-            }
-          
-        })
-       }
-
-       function removeBackSection()
-       {
-        for(let i=0; i<totalSection; i++)
-        {
-          allSection[i].classList.remove("back-section");
-        }
-       }
-
-       function addBackSection(nb)
-       {
-        allSection[nb].classList.add("back-section");
-       }
-       function showSection(element) {
-        for (let i = 0; i < totalSection; i++) {
-            allSection[i].classList.remove("active");
-        }
-    
-        const target = element.getAttribute("href").split("#")[1];
-        const targetElement = document.querySelector("#" + target);
-    
-        // Check if the target element exists before trying to access its classList
-        if (targetElement) {
-            targetElement.classList.add("active");
-        } else {
-            console.error("Target element not found:", target);
-        }
+    if (!targetElement) {
+        console.error("Target element not found:", target);
+        return;
     }
-        function updateNav(element)
-       {
-        for (let i=0;i<totalNavList; i++)
-        {
-          navList[i].querySelector("a").classList.remove("active");
-          const target =element.getAttribute("href").split("#")[1];
-          if (target === navList[i].querySelector("a").getAttribute("href").split("#")[1])
-          {
-            navList[i].querySelector("a").classList.add("active");
 
-          }
+    removeBackSection();
+    allSection.forEach(sec => sec.classList.remove("active"));
+    targetElement.classList.add("active");
+}
+
+// Remove back-section class from all sections
+function removeBackSection() {
+    allSection.forEach(sec => sec.classList.remove("back-section"));
+}
+
+// Add back-section class to a section by index
+function addBackSection(index) {
+    allSection[index].classList.add("back-section");
+}
+
+// Update navigation active class
+function updateNav(element) {
+    const target = element.getAttribute("href").split("#")[1];
+    navList.forEach(li => {
+        const a = li.querySelector("a");
+        a.classList.remove("active");
+        if (a.getAttribute("href").split("#")[1] === target) {
+            a.classList.add("active");
         }
-       } 
+    });
+}
 
-       //hire me
-       document.querySelector(".hire-me").addEventListener("click",function()
-       {
-        const sectionIndex = this.getAttribute("data-section-index");
-        //console.log(sectionIndex);
+// Add click listeners to all nav links
+navList.forEach(li => {
+    const a = li.querySelector("a");
+    a.addEventListener("click", function(e) {
+        e.preventDefault();
+        navList.forEach(li => li.querySelector("a").classList.remove("active"));
+        this.classList.add("active");
         showSection(this);
-        updateNav(this);
-        removeBackSection();
-        addBcakSection(sectionIndex)
-       })
+        if (window.innerWidth < 1200) asideSectionTogglerBtn();
+    });
+});
 
+// Add click listener to the logo link
+document.querySelector(".logo a").addEventListener("click", function(e) {
+    e.preventDefault();
+    showSection(this); // scroll/show the home section
+    updateNav(this);   // update nav highlighting
+});
 
+// Hire-me button
+document.querySelector(".hire-me").addEventListener("click", function() {
+    const sectionIndex = this.getAttribute("data-section-index");
+    showSection(this);
+    updateNav(this);
+    removeBackSection();
+    addBackSection(sectionIndex);
+});
+
+// Nav toggler for responsive
 const navTogglerBtn = document.querySelector(".nav-toggler"),
-       aside = document.querySelector(".aside");
-       navTogglerBtn.addEventListener('click', () =>{
-        asideSectionTogglerBtn();
-       })
-       function asideSectionTogglerBtn()
-       {
-        aside.classList.toggle("open");
-        navTogglerBtn.classList.toggle("open");
-        //responsive section
-         for (let i=0;i<totalSection;i++)
-        {
-          allSection[i].classList.toggle("open");
-        } 
-         
-       }
+      aside = document.querySelector(".aside");
+
+navTogglerBtn.addEventListener("click", () => {
+    asideSectionTogglerBtn();
+});
+
+function asideSectionTogglerBtn() {
+    aside.classList.toggle("open");
+    navTogglerBtn.classList.toggle("open");
+    allSection.forEach(sec => sec.classList.toggle("open"));
+}

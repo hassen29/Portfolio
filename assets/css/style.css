@@ -798,6 +798,13 @@ body.dark .tag:hover {
 }
 
 
+.portfolio-img img {
+    width: 100%;        /* Make image fill the container width */
+    height: 200px;      /* Optional: set a fixed height for all images */
+    object-fit: cover;  /* Ensures image fills box without distortion */
+}
+
+
 
 
 /**/

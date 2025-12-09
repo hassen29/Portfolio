@@ -1,3 +1,22 @@
+
+// typing
+
+var typed = new Typed(".typing",{
+    strings: [
+        "BI Developer",
+        "Data Analyst",
+        "Data Engineer",
+        "Business Analyst"
+    ],
+    typeSpeed: 60,
+    BackSpeed: 60,
+    loop: true
+});
+
+
+
+
+//
 const nav = document.querySelector(".nav"),
       navList = nav.querySelectorAll("li"),
       totalNavList = navList.length,
